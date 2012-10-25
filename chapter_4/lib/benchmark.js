@@ -27,28 +27,32 @@ var benchmark = (function() {
     }
 
     function runTests(tests, view, iterations) {
-        for (var label in tests) {
-            if (!tests.hasOwnProperty(label) || typeof tests[label] != "function") {
-                continue;
-            }
-            (function(name, test) {
-                setTimeout(function() {
-                    var start = new Date().getTime();
-                    var l = iterations;
+    	for (var label in tests) {
+	    	if (!tests.hasOwnProperty(label) || typeof tests[label] != "function") {
+	      	continue;
+	      }
+	      (function(name, test) {
+	           setTimeout(function() {
+                var start = new Date().getTime();
+                var l = iterations;
+
+                if (!test.length) {
                     while (l--) {
                         test();
                     }
-                    var total = new Date().getTime() - start;
-                    var li = document.createElement("li");
-                    li.innerHTML = name + ": " + total +
-                    "ms (total), " + (total / iterations) +
-                    "ms (avg)";
-                    view.appendChild(li);
-                },
-                15);
-            } (label, tests[label]));
-        }
-    }
+                } else {
+                    test(l);
+                }
+                var total = new Date().getTime() - start;
+                var li = document.createElement("li");
+                li.innerHTML = name + ": " + total +
+                	"ms (total), " + (total / iterations) +
+                	"ms (avg)";
+                view.appendChild(li);
+            }, 15);
+        } (label, tests[label]));
+    	}
+		}
 
     function benchmark(name, tests, iterations) {
         iterations = iterations || 1000;
