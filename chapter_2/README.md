@@ -24,3 +24,7 @@ Test all
 Auto-runner for tests :)
     jsautotest
 
+## JsTestDriver Installation
+Create a path variable to point to the .jar directory in ~/.bash_profile
+    export JSTESTDRIVER_HOME=~/Developer/jstestdriver
+
